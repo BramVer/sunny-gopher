@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-    "strings"
 	"io/ioutil"
 	"math/rand"
 )
@@ -16,33 +15,41 @@ var fileName = "quotes"
 // If file is not yet in mem, reads, generates random int and returns quote
 func getQuote() string {
 	file := readFile(fileName)
+	quotes := transformFileSlice(file)
 
+	// Determine random value based on total amount of quotes
+	rand := randomInt(len(file))
+
+	// Print quote
+	fmt.Println(file[rand-1])
 }
 
 // Reads quotefile
-func readFile(fname string) string {
+func readFile(fname string) []byte {
 	// Gets file as a slice of each line
 	file, err := ioutil.ReadFile(fname)
-	if err != nil {
-		return file
+	if err == nil {
+		panic(err)
 	}
+
+	return file
 }
 
 // Transforms into easy accessible slice per quote instead of line
 func transformFileSlice(file []byte) []string {
-    var quote string
+	var quote string
 	quoteSlice := []string{}
 
 	for _, element := range file {
-        el := (string)element
-        if (el == delimiter) {
-            quoteSlice.append(quote)
-        } else {
-            quote.WriteString(el)
-        }
+		el := string(element)
+		if el == delimiter {
+			quoteSlice = append(quoteSlice, quote)
+		} else {
+			quote += el
+		}
 	}
 
-    return quoteSlice
+	return quoteSlice
 }
 
 func randomInt(max int) int {
