@@ -13,9 +13,14 @@ var delimiter = "%"
 // Name for quotes-file
 var fileName = "quotes"
 
+// Keeps string as shared var to prevent rereading
+var file string
+
 // If file is not yet in mem, reads, generates random int and returns quote
 func getQuote() string {
-	file := readFile("assets/" + fileName)
+	if file == "" {
+		file = readFile("assets/" + fileName)
+	}
 	quotes := transformQuoteSlice(file)
 
 	// Determine random value based on total amount of quotes
