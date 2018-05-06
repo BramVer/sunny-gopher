@@ -4,8 +4,8 @@ Documentation=https://github.com/BramVer/sunny-gopher
 
 [Service]
 Type=simple
-ExecStart=$GOPATH/sunny-gopher/main
-WorkingDirectory=$GOPATH/sunny-gopher
+ExecStart=/root/go_projects/sunny-gopher/main
+WorkingDirectory=/root/go_projects/sunny-gopher
 Restart=always
 RestartSec=3
 
