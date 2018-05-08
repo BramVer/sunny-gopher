@@ -4,7 +4,7 @@ pipeline {
 
     environment {
         REPO_SERVER = 'repo.youkebox.be'
-        REPO_PATH   = "/var/vhosts/repo/darm/${env.GIT_BRANCH}"
+        REPO_PATH   = "/var/vhosts/repo/${env.GIT_BRANCH}-sunny-gopher"
         APPL_SERVER = '159.89.14.97'
         NAME        = 'sunny-gopher'
         VERSION     = '0.1'
