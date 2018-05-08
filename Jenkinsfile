@@ -3,8 +3,9 @@ pipeline {
     agent any
 
     environment {
-        REPO_SERVER = '159.89.14.97'
-        REPO_PATH   = "/var/vhosts/repo/${env.GIT_BRANCH}"
+        REPO_SERVER = 'repo.youkebox.be'
+        REPO_PATH   = "/var/vhosts/repo/darm/${env.GIT_BRANCH}"
+        APPL_SERVER = '159.89.14.97'
         NAME        = 'sunny-gopher'
         VERSION     = '0.1'
         DESCRIPTION = 'Returns random quotes from IASIP.'
@@ -45,8 +46,8 @@ pipeline {
                 }
             }
             steps {
-                 sh "ssh root@${REPO_SERVER} 'yum makecache; yum update sunny-gopher -y'"
-                 sh "ssh root@${REPO_SERVER} 'systemctl restart sunny-gopher'"
+                 sh "ssh root@${APPL_SERVER} 'yum makecache; yum update sunny-gopher -y'"
+                 sh "ssh root@${APPL_SERVER} 'systemctl restart sunny-gopher'"
             }
         }
     }
