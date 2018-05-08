@@ -32,6 +32,7 @@ pipeline {
                 }
             }
             steps {
+                sh "ssh root@${REPO_SERVER} 'mkdir -p ${REPO_PATH}/packages/'"
                 sh "scp sunny-gopher-*.rpm root@${REPO_SERVER}:${REPO_PATH}/packages/"
                 sh "ssh root@${REPO_SERVER} 'cd ${REPO_PATH}/packages/ && rm -rf \$(ls ${REPO_PATH}/packages/ -1t | grep ${NAME}-${VERSION} | tail -n +4)'"
                 sh "ssh root@${REPO_SERVER} 'createrepo --update ${REPO_PATH}'"
