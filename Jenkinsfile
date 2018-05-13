@@ -3,9 +3,8 @@ pipeline {
     agent any
 
     environment {
-        REPO_SERVER = 'repo.youkebox.be'
-        REPO_PATH   = "/var/vhosts/repo/${env.GIT_BRANCH}-sunny-gopher"
-        APPL_SERVER = '159.89.14.97'
+        SERVER = '159.89.14.97'
+        REPO_PATH   = "/var/ftp/repo/sunny-gopher"
         NAME        = 'sunny-gopher'
         VERSION     = '0.1'
         DESCRIPTION = 'Returns random quotes from IASIP.'
@@ -32,10 +31,10 @@ pipeline {
                 }
             }
             steps {
-                sh "ssh root@${REPO_SERVER} 'mkdir -p ${REPO_PATH}/packages/'"
-                sh "scp sunny-gopher-*.rpm root@${REPO_SERVER}:${REPO_PATH}/packages/"
-                sh "ssh root@${REPO_SERVER} 'cd ${REPO_PATH}/packages/ && rm -rf \$(ls ${REPO_PATH}/packages/ -1t | grep ${NAME}-${VERSION} | tail -n +4)'"
-                sh "ssh root@${REPO_SERVER} 'createrepo --update ${REPO_PATH}'"
+                sh "ssh root@${SERVER} 'mkdir -p ${REPO_PATH}/packages/'"
+                sh "scp sunny-gopher-*.rpm root@${SERVER}:${REPO_PATH}/packages/"
+                sh "ssh root@${SERVER} 'cd ${REPO_PATH}/packages/ && rm -rf \$(ls ${REPO_PATH}/packages/ -1t | grep ${NAME}-${VERSION} | tail -n +4)'"
+                sh "ssh root@${SERVER} 'createrepo --update ${REPO_PATH}'"
             }
         }
 
@@ -47,8 +46,8 @@ pipeline {
                 }
             }
             steps {
-                 sh "ssh root@${APPL_SERVER} 'yum makecache; yum update sunny-gopher -y'"
-                 sh "ssh root@${APPL_SERVER} 'systemctl restart sunny-gopher'"
+                 sh "ssh root@${SERVER} 'yum makecache; yum update sunny-gopher -y'"
+                 sh "ssh root@${SERVER} 'systemctl restart sunny-gopher'"
             }
         }
     }
