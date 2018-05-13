@@ -4,7 +4,7 @@ pipeline {
 
     environment {
         SERVER = '159.89.14.97'
-        REPO_PATH   = "/var/ftp/repo/sunny-gopher"
+        REPO_PATH   = "/var/repo/sunny-gopher"
         NAME        = 'sunny-gopher'
         VERSION     = '0.1'
         DESCRIPTION = 'Returns random quotes from IASIP.'
